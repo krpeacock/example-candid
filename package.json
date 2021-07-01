@@ -10,6 +10,8 @@
   "author": "Kyle Peacock",
   "license": "ISC",
   "dependencies": {
+    "@dfinity/agent": "^0.9.1",
+    "@dfinity/identity": "^0.9.1-beta-1",
     "@dfinity/principal": "^0.9.1"
   }
 }

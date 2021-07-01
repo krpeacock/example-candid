@@ -1,3 +1,5 @@
+import { Principal } from "@dfinity/principal";
+
 // important escape hatch for where bigint can't be polyfilled
 export interface Nat64Handler {
   toString: () => string;
@@ -13,24 +15,24 @@ export type CallResponseDefault = {
 };
 
 export class CandidBlob {
-  _content: number[];
+  _raw: number[];
   constructor(source?: ArrayLike<number>) {
-    this._content = [];
+    this._raw = [];
     for (let index = 0; index < source.length; index++) {
-      this._content.push(source[index]);
+      this._raw.push(source[index]);
     }
   }
   /**
    * toUint8Array
    */
   public toUint8Array() {
-    return Uint8Array.from(this._content);
+    return Uint8Array.from(this._raw);
   }
   /**
    * toArray
    */
   public toArray() {
-    return this._content;
+    return this._raw;
   }
   /**
    * toHex
@@ -42,6 +44,21 @@ export class CandidBlob {
    * toArrayBuffer
    */
   public toArrayBuffer() {
-    return Uint8Array.from(this._content).buffer;
+    return Uint8Array.from(this._raw).buffer;
+  }
+
+  /**
+   * toPrincipal
+   */
+  public toPrincipal() {
+    return Principal.from(this.toString());
+  }
+
+  /**
+   * toString
+   */
+  public toString(): string {
+    // Implement toString
+    return "";
   }
 }
