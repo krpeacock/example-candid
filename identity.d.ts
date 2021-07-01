@@ -16,8 +16,7 @@ export type SessionKey = PublicKey;
 export type FrontendHostName = string;
 export type Timestamp = Nat64;
 
-// record of {text; text}, or {nat16; nat16;} can be a Record
-export type HeaderField = Record<string, string>;
+export type HeaderField = [string, string];
 
 // Record with named attributes is a type
 export type HttpRequest = {
@@ -63,11 +62,15 @@ export type Callback = {
 // Complex variant pulled out - if Callback has a naming conflict, use StreamingStrategyCallback
 export type StreamingStrategy = Callback;
 
-// Variants with exclusively non-type names are strings
-export type Purpose = "recovery" | "authentication";
+// Variants are listed as objects with a kind of the label
+export type Purpose = { kind: "recovery" } | { kind: "authentication" };
 
 // Do not convert variant strings to camelCase
-export type KeyType = "unknown" | "platform" | "cross_platform" | "seed_phrase";
+export type KeyType =
+  | { kind: "unknown" }
+  | { kind: "platform" }
+  | { kind: "cross_platform" }
+  | { kind: "seed_phrase" };
 
 export type DeviceData = {
   pubkey: DeviceKey;

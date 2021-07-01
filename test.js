@@ -1,9 +1,3 @@
-import { IdentityAgent } from "./typescript";
+import { createAgent } from "./javascript";
 
-const agent = new IdentityAgent();
-
-agent.lookup(BigInt("10015")).then((value) => {
-  value.forEach((deviceData) => {
-    deviceData.credentialId.toHex();
-  });
-});
+const agent = createAgent("rrkah-cai")

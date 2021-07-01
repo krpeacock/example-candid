@@ -1,10 +1,6 @@
-import type { _SERVICE } from "./identity";
 import {
   Actor,
-  ActorConfig,
-  ActorSubclass,
   HttpAgent,
-  HttpAgentOptions,
 } from "@dfinity/agent";
 
 // Same interface we have currently from JS binding
@@ -107,15 +103,18 @@ export const idlFactory = ({ IDL }) => {
   });
 };
 
-export type ServiceOptions = {
-  agentOptions?: HttpAgentOptions;
-  actorOptions?: ActorConfig
-};
-export const createAgent = (canisterId: string, options?: ServiceOptions) => {
+
+/**
+ * 
+ * @param {string | Principal} canisterId Canister ID of Agent
+ * @param {{agentOptions?: import("@dfinity/agent").HttpAgentOptions; actorOptions?: import("@dfinity/agent").ActorConfig}} [options] 
+ * @returns {import("@dfinity/agent").ActorSubclass<import("./identity")._SERVICE>}
+ */
+export const createAgent = (canisterId, options) => {
   const agent = new HttpAgent({ ...options?.agentOptions });
-  return Actor.createActor<_SERVICE>(idlFactory, {
+  return Actor.createActor(idlFactory, {
     agent: agent,
     canisterId,
     ...options.actorOptions
-  }) as ActorSubclass<_SERVICE>;
+  });
 };
